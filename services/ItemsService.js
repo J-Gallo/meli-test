@@ -70,7 +70,7 @@ class ItemsService {
           id: result.id,
           title: result.title,
           price: that._formatPrice(result.price),
-          picture: result.pictures[0].secure_url,
+          picture: result.pictures[0] ? result.pictures[0].secure_url : '',
           condition: result.condition == 'new' ? 'Nuevo' : 'Usado',
           free_shipping: result.shipping.free_shipping,
           sold_quantity: result.sold_quantity,

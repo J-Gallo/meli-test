@@ -37,3 +37,5 @@ app.prepare()
     console.log(`> Ready on http://localhost:${port}`)
   })
 });
+
+module.exports;

@@ -11,7 +11,6 @@ class RestConnector {
   }
 
   get(url, options) {
-    console.log('[GET] -> ' + url);
     if (options && options.cache) {
       return this._getWithCache(url, options);
     } else {
@@ -19,40 +18,16 @@ class RestConnector {
     }
   }
 
-  post(url, body, options) {
-    console.log('[POST] ' + url);
-
-    let deferred = Q.defer();
-    restler.postJson(url, body, options)
-      .on('success', (rs) => deferred.resolve(rs))
-      .on('fail', (err) => this._handleError(url, deferred, err))
-      .on('error', (err) => this._handleError(url, deferred, err))
-      .on('timeout', (err) =>  this._handleError(url, deferred, err));
-
-    return deferred.promise;
-  }
-
-  delete(url, options) {
-    console.log('[DELETE] ' + url);
-
-    let deferred = Q.defer();
-
-    restler.del(url, options)
-      .on('success', (rs) => deferred.resolve(rs))
-      .on('fail', (err) => this._handleError(url, deferred, err))
-      .on('error', (err) => this._handleError(url, deferred, err))
-      .on('timeout', (err) =>  this._handleError(url, deferred, err));
-
-    return deferred.promise;
-  }
 
   _getWithoutCache(url, options) {
     let deferred = Q.defer();
     restler .get(url, options)
             .on('success', (rs) => deferred.resolve(rs))
-            .on('fail', (err) => this._handleError(url, deferred, err))
-            .on('error', (err) => this._handleError(url, deferred, err))
-            .on('timeout', (err) =>  this._handleError(url, deferred, err));
+            .on('fail', (err, response) => {
+              deferred.reject({err: err, response: response})
+            })
+            .on('error', (err) => deferred.reject(err))
+            .on('timeout', (err) =>  deferred.reject(err));
 
     return deferred.promise;
   }
