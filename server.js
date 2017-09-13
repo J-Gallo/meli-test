@@ -12,7 +12,7 @@ const itemsController = require('./controllers/ItemsController'),
 
 const itemsInstance = new itemsController(new itemsService(new apiClient(2000)));
 
-app.prepare()
+app.prepare() 
 .then(() => {
   const server = express();
 
@@ -37,5 +37,3 @@ app.prepare()
     console.log(`> Ready on http://localhost:${port}`)
   })
 });
-
-module.exports;

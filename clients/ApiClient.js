@@ -32,18 +32,12 @@ class RestConnector {
     return deferred.promise;
   }
 
-  _handleError(url, deferred, err) {
-    if(!(err instanceof Error)) err = new Error(err);
-    deferred.reject(new Error('RestConnector Error ' + url));
-  }
-
   _getWithCache(url, options) {
     let deferred = Q.defer();
     let cacheKey = this._getCacheKey(url);
 
     this._cache.get(cacheKey, (err, cachedResponse) => {
       if(cachedResponse) {
-        console.log('Response resolved from cache with key: ' + cacheKey);
         deferred.resolve(cachedResponse)
 
       } else {

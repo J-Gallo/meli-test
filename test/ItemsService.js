@@ -7,7 +7,7 @@ const chai = require('chai'),
 
 
 describe('getProduct function', () => {
-  const itemsIntance = new itemsService(new apiClient(2000));
+  const itemsInstance = new itemsService(new apiClient(2000));
   const response = {
     "id": "MLA675243373",
     "site_id": "MLA",
@@ -341,7 +341,7 @@ describe('getProduct function', () => {
   it('Getting item: Not found', (done) => {
     nock('https://api.mercadolibre.com').get('/items/123').reply(404, 'not found');
 
-    itemsIntance.getProduct(123).catch((err) => {
+    itemsInstance.getProduct(123).catch((err) => {
       
       expect(err.response.statusCode).to.be.equal(404);
       done();
@@ -351,28 +351,28 @@ describe('getProduct function', () => {
 
     nock('https://api.mercadolibre.com').get('/items/MLA675243373').reply(200, response);
     
-    itemsIntance.getProduct('MLA675243373').then((data) => {
+    itemsInstance.getProduct('MLA675243373').then((data) => {
       expect(data.item.id).to.be.equal('MLA675243373');
       done()
     })
   })
   it('Response format: author', (done) => {
     nock('https://api.mercadolibre.com').get('/items/MLA675243373').reply(200, response);
-    itemsIntance.getProduct('MLA675243373').then((data) => {
+    itemsInstance.getProduct('MLA675243373').then((data) => {
       expect(data).to.have.property('author');
       done();
     })
   })
   it('Response format: items', (done) => {
     nock('https://api.mercadolibre.com').get('/items/MLA675243373').reply(200, response);
-    itemsIntance.getProduct('MLA675243373').then((data) => {
+    itemsInstance.getProduct('MLA675243373').then((data) => {
       expect(data).to.have.property('item');
       done();
     })
   })
   it('Response format: is object', (done) => {
     nock('https://api.mercadolibre.com').get('/items/MLA675243373').reply(200, response);
-    itemsIntance.getProduct('MLA675243373').then((data) => {
+    itemsInstance.getProduct('MLA675243373').then((data) => {
       expect(data).to.be.an('object');
       done();
     })
@@ -380,7 +380,7 @@ describe('getProduct function', () => {
 });
 
 describe('getDescription function', () => {
-  const itemsIntance = new itemsService(new apiClient(2000));
+  const itemsInstance = new itemsService(new apiClient(2000));
   const response = {
     "text": "",
     "plain_text": "Envío gratis a todo el país",
@@ -392,7 +392,7 @@ describe('getDescription function', () => {
   it('Getting description: Not found', (done) => {
     nock('https://api.mercadolibre.com').get('/items/123/description').reply(404, 'not found');
 
-    itemsIntance.getDescription(123).catch((err) => {
+    itemsInstance.getDescription(123).catch((err) => {
       
       expect(err.response.statusCode).to.be.equal(404);
       done();
@@ -402,7 +402,7 @@ describe('getDescription function', () => {
 
     nock('https://api.mercadolibre.com').get('/items/MLA675243373/description').reply(200, response);
     
-    itemsIntance.getDescription('MLA675243373').then((data) => {
+    itemsInstance.getDescription('MLA675243373').then((data) => {
       expect(data).to.be.equal("Envío gratis a todo el país");
       done()
     })
@@ -410,9 +410,272 @@ describe('getDescription function', () => {
   it('Response format: is string', (done) => {
     nock('https://api.mercadolibre.com').get('/items/MLA675243373/description').reply(200, response);
     
-    itemsIntance.getDescription('MLA675243373').then((data) => {
+    itemsInstance.getDescription('MLA675243373').then((data) => {
       expect(data).to.be.a("string");
       done()
     })
   })
 });
+
+describe('getBreadcrumb function', () => {
+  const itemsInstance = new itemsService(new apiClient(2000));
+  const response = {
+    "id": "MLA352542",
+    "name": "16GB",
+    "picture": null,
+    "permalink": null,
+    "total_items_in_this_category": 2286,
+    "path_from_root": [
+      {
+        "id": "MLA1051",
+        "name": "Celulares y Teléfonos"
+      },
+      {
+        "id": "MLA1055",
+        "name": "Celulares y Smartphones"
+      },
+      {
+        "id": "MLA32089",
+        "name": "iPhone"
+      },
+      {
+        "id": "MLA352540",
+        "name": "iPhone 6"
+      },
+      {
+        "id": "MLA352542",
+        "name": "16GB"
+      }
+    ],
+    "children_categories": [
+    ],
+    "attribute_types": "attributes",
+    "settings": {
+      "adult_content": false,
+      "buying_allowed": true,
+      "buying_modes": [
+        "auction",
+        "buy_it_now"
+      ],
+      "catalog_domain": "MLA-CELLPHONES",
+      "coverage_areas": "not_allowed",
+      "currencies": [
+        "ARS"
+      ],
+      "fragile": false,
+      "immediate_payment": "required",
+      "item_conditions": [
+        "new",
+        "used",
+        "not_specified"
+      ],
+      "items_reviews_allowed": false,
+      "listing_allowed": true,
+      "max_description_length": 50000,
+      "max_pictures_per_item": 12,
+      "max_pictures_per_item_var": 10,
+      "max_sub_title_length": 70,
+      "max_title_length": 60,
+      "maximum_price": null,
+      "minimum_price": null,
+      "mirror_category": null,
+      "mirror_master_category": null,
+      "mirror_slave_categories": [
+      ],
+      "price": "required",
+      "reservation_allowed": null,
+      "restrictions": [
+      ],
+      "rounded_address": false,
+      "seller_contact": "not_allowed",
+      "shipping_modes": [
+        "not_specified",
+        "me2",
+        "me1",
+        "custom"
+      ],
+      "shipping_options": [
+        "custom",
+        "carrier"
+      ],
+      "shipping_profile": "optional",
+      "show_contact_information": false,
+      "simple_shipping": "optional",
+      "stock": "required",
+      "sub_vertical": "smartphones",
+      "subscribable": null,
+      "tags": [
+      ],
+      "vertical": "consumer_electronics",
+      "vip_subdomain": "articulo"
+    },
+    "meta_categ_id": 43882,
+    "attributable": false
+  };
+  it('Getting breadcrumb: Not found', (done) => {
+    nock('https://api.mercadolibre.com').get('/categories/123').reply(404, 'not found');
+    
+    itemsInstance.getBreadcrumb(123).catch((err) => {
+      expect(err.response.statusCode).to.be.equal(404);
+      done()
+    })
+  })
+  it('Getting breadcrumb: Success', (done) => {
+    nock('https://api.mercadolibre.com').get('/categories/MLA352542').reply(200, response);
+    
+    itemsInstance.getBreadcrumb('MLA352542').then((data) => {
+      expect(data).not.to.be.empty;
+      done()
+    })
+  })
+  it('Response format: is array', (done) => {
+    nock('https://api.mercadolibre.com').get('/categories/MLA352542').reply(200, response);
+    
+    itemsInstance.getBreadcrumb('MLA352542').then((data) => {
+      expect(data).to.be.an('array');
+      done()
+    })
+  })
+})
+
+describe('search function', () => {
+  const itemsInstance = new itemsService(new apiClient(2000));
+  const response = {
+    "site_id": "MLA",
+    "query": "iphone",
+    "paging": {
+      "total": 22402,
+      "offset": 0,
+      "limit": 1,
+      "primary_results": 1000
+    },
+    "results": [
+      {
+        "id": "MLA632591345",
+        "site_id": "MLA",
+        "title": "Iphone 6 16gb Lte 4g Libres Nuevos Caja Sellados",
+        "seller": {
+          "id": 223521468,
+          "power_seller_status": "platinum",
+          "car_dealer": false,
+          "real_estate_agency": false,
+          "tags": [
+          ]
+        },
+        "price": 9700,
+        "currency_id": "ARS",
+        "available_quantity": 46,
+        "sold_quantity": 1288,
+        "buying_mode": "buy_it_now",
+        "listing_type_id": "gold_special",
+        "stop_time": "2037-01-26T14:19:04.000Z",
+        "condition": "new",
+        "permalink": "http://articulo.mercadolibre.com.ar/MLA-632591345-iphone-6-16gb-lte-4g-libres-nuevos-caja-sellados-_JM",
+        "thumbnail": "http://mla-s2-p.mlstatic.com/532505-MLA25018939647_082016-I.jpg",
+        "accepts_mercadopago": true,
+        "installments": {
+          "quantity": 12,
+          "amount": 1023.51,
+          "rate": 26.62,
+          "currency_id": "ARS"
+        },
+        "address": {
+          "state_id": "AR-C",
+          "state_name": "Capital Federal",
+          "city_id": "TUxBQlBVRTQ5NjBa",
+          "city_name": "Puerto Madero"
+        },
+        "shipping": {
+          "free_shipping": true,
+          "mode": "me2",
+          "tags": [
+          ]
+        },
+        "seller_address": {
+          "id": 190195864,
+          "comment": "",
+          "address_line": "",
+          "zip_code": "",
+          "country": {
+            "id": "AR",
+            "name": "Argentina"
+          },
+          "state": {
+            "id": "AR-C",
+            "name": "Capital Federal"
+          },
+          "city": {
+            "id": "TUxBQlBVRTQ5NjBa",
+            "name": "Puerto Madero"
+          },
+          "latitude": -34.5967821,
+          "longitude": -58.3707325
+        },
+        "attributes": [
+          {
+            "attribute_group_id": "MAIN",
+            "attribute_group_name": "Atributos Principales",
+            "id": "BRAND",
+            "name": "Marca",
+            "value_id": "9344",
+            "value_name": "Apple",
+            "value_struct": null
+          },
+          {
+            "attribute_group_id": "MAIN",
+            "attribute_group_name": "Atributos Principales",
+            "id": "MODEL",
+            "name": "Modelo",
+            "value_id": "59833",
+            "value_name": "6",
+            "value_struct": null
+          }
+        ],
+        "original_price": null,
+        "category_id": "MLA352542",
+        "official_store_id": null,
+        "catalog_product_id": "MLA6055012",
+        "reviews": {
+          "rating_average": 4.5,
+          "total": 424
+        }
+      }
+    ]
+  }
+
+  it('Getting search: Error', (done) => {
+    nock('https://api.mercadolibre.com').get('/sites/MLA/search?offset=0&limit=4&q=iphone').reply(500, {});
+    
+    itemsInstance.search('iphone').catch((err) => {
+      expect(err.response.statusCode).to.be.equal(500);
+      done()
+    })
+  })
+
+  it('Getting search: Success', (done) => {
+    nock('https://api.mercadolibre.com').get('/sites/MLA/search?offset=0&limit=4&q=iphone').reply(200, response);
+    
+    itemsInstance.search('iphone').then((data) => {
+      expect(data).not.to.be.empty;
+      done()
+    })
+  })
+
+  it('Response format: items', (done) => {
+    nock('https://api.mercadolibre.com').get('/sites/MLA/search?offset=0&limit=4&q=iphone').reply(200, response);
+    
+    itemsInstance.search('iphone').then((data) => {
+      expect(data).to.have.property('items');
+      done()
+    })
+  })
+
+  it('Response format: items to be an array', (done) => {
+    nock('https://api.mercadolibre.com').get('/sites/MLA/search?offset=0&limit=4&q=iphone').reply(200, response);
+    
+    itemsInstance.search('iphone').then((data) => {
+      expect(data.items).to.be.an('array');
+      done()
+    })
+  })
+})
