@@ -14,6 +14,10 @@ https://meli-test.now.sh
 
     npm test
     
+## Coverage
+
+![alt text](https://puu.sh/xyJpe/566e04a522.png) 
+
 ## Technology stack
 
 * ReactJS 
