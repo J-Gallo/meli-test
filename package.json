@@ -1,0 +1,20 @@
+{
+  "name": "meli-test",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "NODE_ENV=dev node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "express": "^4.14.0",
+    "format-number": "^3.0.0",
+    "next": "latest",
+    "node-cache": "^4.1.1",
+    "q": "^1.5.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "restler": "^3.4.0"
+  }
+}
